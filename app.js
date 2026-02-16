@@ -64,9 +64,9 @@ const sessionOptions={
     }
 };
 
-// app.get("/",(req,res)=>{
-//     res.send("hi,I am robot");
-// });
+app.get("/",(req,res)=>{
+    res.send("server is running successfully");
+});
 
 
 
