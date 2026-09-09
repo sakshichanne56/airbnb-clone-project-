@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const passportLocalMongoose = require("passport-local-mongoose");
+const passportLocalMongooseModule = require("passport-local-mongoose");
+
+const passportLocalMongoose =
+    typeof passportLocalMongooseModule === "function"
+        ? passportLocalMongooseModule
+        : passportLocalMongooseModule.default;
 
 const userSchema = new Schema({
     email: {
@@ -11,11 +16,10 @@ const userSchema = new Schema({
     }
 });
 
-const plugin =
-    typeof passportLocalMongoose === "function"
-        ? passportLocalMongoose
-        : passportLocalMongoose.default;
+if (typeof passportLocalMongoose !== "function") {
+    throw new Error("passport-local-mongoose plugin is not loading correctly");
+}
 
-userSchema.plugin(plugin);
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);
