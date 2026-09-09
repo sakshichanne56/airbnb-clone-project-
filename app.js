@@ -104,7 +104,12 @@ app.use("/listings/:id/reviews",reviewsRouter);
 
 app.use((err,req,res,next)=>{
     let{statusCode=500,message="Something went wrong!"}=err;
-    res.render("error.ejs",{message});
+     if (res.headersSent) {
+        return next(err);
+    }
+
+    res.status(statusCode).render("error.ejs", { message });
+   
     // res.status(statusCode).send(message);
 });
 
