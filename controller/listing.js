@@ -37,7 +37,7 @@ module.exports.renderEditForm=async(req,res)=>{
     const listing=await Listing.findById(id);
     if(!listing){
         req.flash("error","Listing you are requested for does not exit!");
-        res.redirect("/listings");
+      return  res.redirect("/listings");
     }
     let originalImageUrl=listing.image.url;
     originalImageUrl=originalImageUrl.replace("/upload","/upload/w_250");
